@@ -3,7 +3,7 @@
 
 * {
     box-sizing: border-box;
-    border: 1px red solid;
+    /* border: 1px red solid; */
 }
 body {
     background-color: #22254b;
@@ -39,10 +39,14 @@ header {
 
 /*=============== MAIN ===============*/
 main {
-    display: flex;
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr); */
-    flex-wrap: wrap;
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* grid-template-columns: repeat(4, 1fr); */
+    /* flex-wrap: wrap; */
+    max-width: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
     justify-content: center;
     gap: 1rem;
     /* margin: 1rem; */
@@ -51,25 +55,35 @@ main {
 
 /*=============== MOVIE ===============*/
 .movie {
+    /* display: flex; */
+    /* flex-direction: column; */
     display: grid;
+    /* max-width: 100%;
+    width: 100%; */
+    /* padding-bottom: 0.1rem; */
     /* align-items: center; */
+    /* justify-content: space-between; */
     background-color: #373b69;
-    width: 13rem;
-    /* height: auto; */
+    /* grid-template-columns: repeat(auto, minmax 200px, 1fr); */
+    position: relative;
     border-radius: 3px;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
+
 .movie__img {
     /* height: auto; */
     max-width: 100%;
+    min-height: 300px;
 }
 
 .movie__info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.3rem 1rem;
+    padding: 0.25rem 0.5rem;
+
+    /* margin-top: 1rem; */
     letter-spacing: 1px;
     font-size: 0.7rem;
 }
@@ -84,7 +98,7 @@ main {
     border-radius: 3px;
     padding: 0.25rem 0.5rem;
     font-weight: bold;
-    margin-left: 0.1rem;
+    margin-left: 0.5rem;
 }
 .green {
     color: rgb(0, 255, 0);
@@ -94,4 +108,26 @@ main {
 }
 .red {
     color: red;
+}
+
+.overview {
+    position: absolute;
+    background-color: #fff;
+    color: black;
+    padding: 1rem;
+    font-size: 0.8rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateY(101%);
+    transition: transform 0.3s ease-in;
+    overflow-y: auto;
+}
+
+.overview h4 {
+    margin-top: 0;
+}
+.movie:hover .overview {
+    transform: translateY(0);
 }

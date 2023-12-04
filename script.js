@@ -9,21 +9,27 @@ const form = document.getElementById("form")
 const search = document.getElementById("search")
 
 //initialize movies by popularity
-getMovies()
+getMovies(APIURL)
 
-async function getMovies() {
-    const resp = await fetch(APIURL)
+async function getMovies(url) {
+    const resp = await fetch(url)
     const respData = await resp.json()
 
-    console.log(respData)
+    // console.log(respData.results)
+    showMovies(respData.results)
+    // return respData
+}
 
-    respData.results.forEach((movie) => {
+function showMovies(movies) {
+    //clear main
+    main.innerHTML = ""
+    movies.forEach((movie) => {
         // mozemo destrukturirati movie i onda koristiti samo nastavke kod kreiranja novog diva
         //ili
         // mozemo koristiti movie+nastavci
 
         // ========== destructuring movie ===========
-        // const {poster_path, title, vote_average} = movie
+        // const { poster_path, title, vote_average } = movie
 
         // const movieElement = document.createElement("div")
         // movieElement.classList.add("movie")
@@ -43,7 +49,7 @@ async function getMovies() {
         const movieElement = document.createElement("div")
         movieElement.classList.add("movie")
 
-        movieElement.innerHTML = `       
+        movieElement.innerHTML = `
             <img
                 class="movie__img"
                 src="${IMGPATH + movie.poster_path}"
@@ -51,12 +57,15 @@ async function getMovies() {
 
             <div class="movie__info">
                 <h3 class="movie__title">${movie.title}</h3>
-                <span class="movie__rating ${getClassByRate(movie.vote_average)}">${movie.vote_average}</span>
+                <span class="movie__rating ${getClassByRate(movie.vote_average)}">${movie.vote_average.toFixed(1)}</span>
+            </div>
+            <div class="overview">
+            <h4>Overview:</h4>
+            ${movie.overview}
             </div>
         `
         main.append(movieElement)
     })
-    return respData
 }
 
 function getClassByRate(vote) {
@@ -73,4 +82,10 @@ form.addEventListener("submit", (e) => {
     e.preventDefault()
 
     const searchTerm = search.value
+
+    if (searchTerm) {
+        getMovies(SEARCHAPI + searchTerm)
+
+        search.value = ""
+    }
 })
